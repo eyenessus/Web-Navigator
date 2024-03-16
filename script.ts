@@ -34,14 +34,26 @@ const newPage = (page: string) => {
   showCurrentPage(currentPage)
 }
 
-
 showCurrentPage(currentPage);
+
 while (finish == false) {
   let instructions = baseInfo
 
   if (!backPages.isEmpty()) {
     instructions += ', ' + backInfo
     showBack = true
+  } else {
+    showBack = false
   }
+
+  if (nextPages.peek() != null) {
+    instructions = `${instructions}, ${nextInfo}`;
+    showNext = true;
+  } else {
+    showNext = false;
+  }
+  
+  instructions = `${instructions}, ${quitInfo}.`;
+  console.log(instructions);
 
 }
