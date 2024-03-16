@@ -1,22 +1,21 @@
-var prompt = require('prompt-sync')();
-// ------------------------------
-// Initialization
-
+let prompt = require('prompt-sync')();
 import Stack from "./Structure/Stack/Stack";
 
-// ------------------------------
+let finish  =false;
+let showBack = false;
+let showNext = false
+
 let currentPage:string = 'Google'
 let backPages = new Stack()
 let nextPages= new Stack()
-// ------------------------------
-// Helper Functions
-// ------------------------------
+
 const showCurrentPage = (action:string)=>{
    console.log(`\n${action}`);
   console.log(`Current page = ${currentPage}`);
   console.log('Back page = ', backPages.peek());
   console.log('Next page = ', nextPages.peek());
 }
+
 /*
  * The following strings are used to prompt the user
  */
@@ -34,9 +33,12 @@ const newPage = (page:string)=>{
   }
   showCurrentPage(currentPage)
 }
+
+
 // ------------------------------
 // User Interface Part 1
 // ------------------------------
+showCurrentPage(currentPage);
 
   // ------------------------------
   // User Interface Part 2
