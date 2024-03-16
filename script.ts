@@ -1,16 +1,16 @@
 let prompt = require('prompt-sync')();
 import Stack from "./Structure/Stack/Stack";
 
-let finish  =false;
+let finish = false;
 let showBack = false;
 let showNext = false
 
-let currentPage:string = 'Google'
+let currentPage: string = 'Google'
 let backPages = new Stack()
-let nextPages= new Stack()
+let nextPages = new Stack()
 
-const showCurrentPage = (action:string)=>{
-   console.log(`\n${action}`);
+const showCurrentPage = (action: string) => {
+  console.log(`\n${action}`);
   console.log(`Current page = ${currentPage}`);
   console.log('Back page = ', backPages.peek());
   console.log('Next page = ', nextPages.peek());
@@ -25,21 +25,23 @@ const nextInfo = 'N|n for next page';
 const quitInfo = 'Q|q for quit';
 const question = 'Where would you like to go today? '
 
-const newPage = (page:string)=>{
+const newPage = (page: string) => {
   backPages.push(currentPage)
   currentPage = page
-  while(!nextPages.isEmpty()){
+  while (!nextPages.isEmpty()) {
     nextPages.pop()
   }
   showCurrentPage(currentPage)
 }
 
 
-// ------------------------------
-// User Interface Part 1
-// ------------------------------
 showCurrentPage(currentPage);
+while (finish == false) {
+  let instructions = baseInfo
 
-  // ------------------------------
-  // User Interface Part 2
-  // ------------------------------
+  if (!backPages.isEmpty()) {
+    instructions += ', ' + backInfo
+    showBack = true
+  }
+
+}
