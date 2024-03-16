@@ -1,5 +1,5 @@
-const Stack = require('./Stack.js');
-
+import Stack from "./Structure/Stack/Stack";
+const prompt = require('prompt-sync')();
 const backPages = new Stack();
 const nextPages = new Stack();
 let currentPage = 'Start Page';
