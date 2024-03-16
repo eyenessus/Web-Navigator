@@ -11,7 +11,7 @@ const showCurrentPage =(action:any) => {
   console.log('Next page = ', nextPages.peek());
 };
 
-const newPage =(page)=>{
+const newPage =(page:any)=>{
   backPages.push(currentPage);
   currentPage = page;
   while(!nextPages.isEmpty()){
