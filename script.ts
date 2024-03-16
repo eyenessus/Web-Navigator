@@ -1,3 +1,4 @@
+// var prompt = require('prompt-sync')();
 // ------------------------------
 // Initialization
 // ------------------------------
