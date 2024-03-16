@@ -1,59 +1,98 @@
-let prompt = require('prompt-sync')();
-import Stack from "./Structure/Stack/Stack";
+const Stack = require('./Stack.js');
 
-let finish = false;
-let showBack = false;
-let showNext = false
+const backPages = new Stack();
+const nextPages = new Stack();
+let currentPage = 'Start Page';
 
-let currentPage: string = 'Google'
-let backPages = new Stack()
-let nextPages = new Stack()
-
-const showCurrentPage = (action: string) => {
+const showCurrentPage =(action:any) => {
   console.log(`\n${action}`);
   console.log(`Current page = ${currentPage}`);
   console.log('Back page = ', backPages.peek());
   console.log('Next page = ', nextPages.peek());
+};
+
+const newPage =(page)=>{
+  backPages.push(currentPage);
+  currentPage = page;
+  while(!nextPages.isEmpty()){
+    nextPages.pop();
+  }
+  showCurrentPage("NEW: ");
 }
 
-/*
- * The following strings are used to prompt the user
- */
-const baseInfo = '\nEnter a url';
+const backPage = () => {
+   nextPages.push(currentPage);
+   let removedValue = backPages.pop();
+   currentPage = removedValue;
+   showCurrentPage("NEW: ");
+}
+
+const NextPage = () => {
+   backPages.push(currentPage);
+   let removedValue = nextPages.pop();
+   currentPage = removedValue;
+   showCurrentPage("NEW: ");
+}
+
+const baseInfo = '\nEnter an url';
 const backInfo = 'B|b for back page';
 const nextInfo = 'N|n for next page';
 const quitInfo = 'Q|q for quit';
 const question = 'Where would you like to go today? '
 
-const newPage = (page: string) => {
-  backPages.push(currentPage)
-  currentPage = page
-  while (!nextPages.isEmpty()) {
-    nextPages.pop()
+
+let finish = false;
+let showBack = false;
+let showNext = false;
+
+let instructions = `${baseInfo}`;
+showCurrentPage('DEFAULT: '
+);
+
+while(finish === false){
+
+
+  if(backPages.peek()!=null){
+    instructions = `${instructions}, ${backInfo}`;
+    showBack = true;
   }
-  showCurrentPage(currentPage)
-}
-
-showCurrentPage(currentPage);
-
-while (finish == false) {
-  let instructions = baseInfo
-
-  if (!backPages.isEmpty()) {
-    instructions += ', ' + backInfo
-    showBack = true
-  } else {
-    showBack = false
+  else {
+    showBack = false;
   }
 
-  if (nextPages.peek() != null) {
+ 
+  if(nextPages.peek()!= null){
     instructions = `${instructions}, ${nextInfo}`;
     showNext = true;
-  } else {
+  }
+  else {
     showNext = false;
   }
-  
-  instructions = `${instructions}, ${quitInfo}.`;
+
+  instructions = `${instructions}, ${quitInfo}`;
   console.log(instructions);
 
+
+const answer = prompt(question);
+let lowerCaseAnswer = answer?.toLowerCase();
+if ((lowerCaseAnswer !== 'b') && (lowerCaseAnswer !== 'n')&&(lowerCaseAnswer !== 'q')) {
+  newPage(answer);
+}
+else if((lowerCaseAnswer === 'b') && (showBack === true))
+{
+  backPage();
+}
+else if(lowerCaseAnswer ==="b"){
+  console.log("You didn't visit any pages yet, you can't go back.");
+}
+else if((lowerCaseAnswer === 'n') && (showNext === true))
+{
+  NextPage();
+}
+else if(lowerCaseAnswer ==="n"){
+  console.log("You didn't visit any pages yet, you can't go foward.");
+}
+else if(lowerCaseAnswer === "q"){
+  finish = true;
+}
 }
